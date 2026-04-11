@@ -35,14 +35,15 @@ body {
 body::after {
   content: '';
   position: fixed;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   background: var(--pink);
+  border: 2px solid var(--white);
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 12px var(--pink), 0 0 30px var(--pink-dim);
+  box-shadow: 0 0 15px var(--pink), 0 0 35px var(--pink-glow);
   transition: transform 0.05s ease;
   left: var(--cx, -100px);
   top: var(--cy, -100px);
@@ -411,22 +412,26 @@ body::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
   width: 100%;
   max-width: 100%;
+  padding: 2rem 1rem;
+  overflow: visible;
 }
 
 /* Bouquet Wrapper with Orbital Rings */
 .bouquet-wrapper {
   position: relative;
-  width: 320px;
-  height: 320px;
+  width: 300px;
+  height: 300px;
   margin: 0 auto;
+  margin-top: 1rem;
   opacity: 0;
   transition: opacity 1s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .bouquet-wrapper.visible {
@@ -572,6 +577,10 @@ body::after {
   flex-direction: column;
   align-items: center;
   gap: 0.6rem;
+  margin-top: 0.5rem;
+  padding: 0 1rem;
+  max-width: 600px;
+  width: 100%;
 }
 
 .prop-line {
@@ -623,7 +632,9 @@ body::after {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 2rem;
+  width: 100%;
 }
 
 .button-area {
@@ -631,12 +642,12 @@ body::after {
   align-items: center;
   justify-content: center;
   position: relative;
-  min-height: 280px;
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 2rem 1rem;
-  gap: 3rem;
+  gap: 1.5rem;
+  height: 120px;
 }
 
 .answer-btn {
@@ -657,12 +668,13 @@ body::after {
   box-shadow: 0 0 30px var(--pink-dim), 0 0 60px var(--pink-soft);
   animation: yesBreathe 2s ease-in-out infinite;
   position: relative;
-  z-index: 2;
+  z-index: 10;
+  flex-shrink: 0;
 }
 
 .yes-btn:hover {
   box-shadow: 0 0 50px var(--pink-glow), 0 0 100px var(--pink-dim);
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 @keyframes yesBreathe {
@@ -675,12 +687,13 @@ body::after {
   color: var(--white);
   border: 1px solid var(--white);
   position: absolute;
-  right: auto;
-  left: 200px;
+  right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  transition: left 0.15s ease, top 0.15s ease, transform 0.15s ease;
+  transition: right 0.15s ease, top 0.15s ease, transform 0.15s ease;
   z-index: 1;
+  flex-shrink: 0;
+  cursor: none !important;
 }
 
 .no-btn:hover {
@@ -845,13 +858,13 @@ body::after {
 @media (max-width: 600px) {
   .button-area {
     flex-direction: row;
-    gap: 2.5rem;
-    min-height: 200px;
+    gap: 1rem;
+    height: 80px;
   }
 
   .answer-btn {
-    padding: 0.8rem 2rem;
-    font-size: 0.95rem;
+    padding: 0.75rem 1.8rem;
+    font-size: 0.9rem;
   }
   
   .yes-btn {
@@ -860,11 +873,10 @@ body::after {
   }
   
   .no-btn {
-    left: auto;
-    right: 0;
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
+    position: relative;
+    right: auto;
+    bottom: auto;
+    top: auto;
     transform: none;
   }
 
@@ -882,15 +894,20 @@ body::after {
     height: 60px;
   }
   
+  .proposal-content {
+    padding: 1.5rem 1rem;
+    gap: 1.2rem;
+  }
+  
   .bouquet-wrapper {
-    width: 240px;
-    height: 240px;
-    margin-top: 1rem;
+    width: 220px;
+    height: 220px;
+    margin-top: 0.5rem;
   }
   
   .orbital-ring.ring-1 {
-    width: 180px;
-    height: 180px;
+    width: 170px;
+    height: 170px;
   }
   
   .orbital-ring.ring-2 {
@@ -904,17 +921,21 @@ body::after {
   }
   
   .bouquet-container {
-    width: 100px;
-    height: 140px;
+    width: 90px;
+    height: 130px;
   }
   
   .ring-container {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
   }
   
   .proposal-text-container {
     padding: 0 1rem;
+  }
+  
+  .prop-line {
+    font-size: clamp(0.8rem, 2vw, 1rem) !important;
   }
 }
 

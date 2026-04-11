@@ -308,17 +308,42 @@
     const btnW = noBtn.offsetWidth;
     const btnH = noBtn.offsetHeight;
 
-    const maxX = rect.width - btnW - 20;
-    const maxY = rect.height - btnH - 20;
+    // Constrain movement within button area, avoiding the YES button
+    const yesBtn = document.getElementById('btn-yes');
+    const yesBtnRect = yesBtn.getBoundingClientRect();
+    
+    let newX, newY, isValidPosition;
+    let attempts = 0;
+    
+    do {
+      newX = Math.random() * (rect.width - btnW - 40);
+      newY = Math.random() * (rect.height - btnH - 40);
+      
+      // Check if position overlaps with YES button
+      const noRect = {
+        left: rect.left + newX,
+        top: rect.top + newY,
+        right: rect.left + newX + btnW,
+        bottom: rect.top + newY + btnH
+      };
+      
+      isValidPosition = !(
+        noRect.left < yesBtnRect.right + 30 &&
+        noRect.right > yesBtnRect.left - 30 &&
+        noRect.top < yesBtnRect.bottom + 30 &&
+        noRect.bottom > yesBtnRect.top - 30
+      );
+      
+      attempts++;
+    } while (!isValidPosition && attempts < 10);
 
-    const newX = Math.random() * maxX;
-    const newY = Math.random() * maxY;
-    const rotation = (Math.random() - 0.5) * 60;
-    const scale = 0.6 + Math.random() * 0.6;
+    const rotation = (Math.random() - 0.5) * 45;
+    const scale = 0.8 + Math.random() * 0.4;
 
-    noBtn.style.right = 'auto';
+    noBtn.style.position = 'absolute';
     noBtn.style.left = newX + 'px';
     noBtn.style.top = newY + 'px';
+    noBtn.style.right = 'auto';
     noBtn.style.transform = `rotate(${rotation}deg) scale(${scale})`;
 
     noAttempts++;
