@@ -7,7 +7,7 @@
 
   // ——— State ———
   let currentSection = 1;
-  const totalSections = 6;
+  const totalSections = 7;
   let transitioning = false;
   let section1Ready = false;
   let sectionAnimated = {};
@@ -147,9 +147,9 @@
     }, 400);
   }
 
-  // Click / tap anywhere to advance (except section 5 & 6)
+  // Click / tap anywhere to advance (except section 5)
   document.addEventListener('click', () => {
-    if (currentSection === 5 || currentSection === 6) return;
+    if (currentSection === 5) return;
     if (currentSection === 1 && !section1Ready) return;
     goToSection(currentSection + 1);
   });
@@ -425,14 +425,26 @@
 
     // Start hearts after a delay
     setTimeout(() => startHearts(), 5000);
+    
+    // Show continue button after all animations
+    setTimeout(() => showContinue(6), 7500);
+
+    // Safety fallback: auto-advance so user never gets stuck here.
+    setTimeout(() => {
+      if (currentSection === 6) goToSection(7);
+    }, 9000);
   }
 
   // ============================================
   // FLOATING HEARTS
   // ============================================
   const hearts = [];
+  let heartsStarted = false;
 
   function startHearts() {
+    if (heartsStarted) return;
+    heartsStarted = true;
+
     for (let i = 0; i < 25; i++) {
       setTimeout(() => {
         hearts.push(createHeart());
@@ -492,6 +504,24 @@
   }
 
   // ============================================
+  // SECTION 7: CUTE PROPOSAL MESSAGE
+  // ============================================
+  function animateSection7() {
+    if (sectionAnimated[7]) return;
+    sectionAnimated[7] = true;
+
+    const lines = sections[7].querySelectorAll('.cute-line, .letter-line, .letter-signature');
+    lines.forEach(line => {
+      const delay = parseInt(line.dataset.delay || 0);
+      const fastDelay = Math.floor(delay * 0.4);
+      setTimeout(() => line.classList.add('visible'), fastDelay);
+    });
+
+    // Start hearts on final page for a romantic vibe.
+    setTimeout(() => startHearts(), 1400);
+  }
+
+  // ============================================
   // SECTION ANIMATION DISPATCHER
   // ============================================
   function animateSection(n) {
@@ -502,6 +532,7 @@
       case 4: animateSection4(); break;
       case 5: /* buttons are always ready */ break;
       case 6: animateSection6(); break;
+      case 7: animateSection7(); break;
     }
   }
 
